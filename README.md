@@ -46,7 +46,7 @@ docker exec -it ze curl http://localhost:8080
 ##### Sleep Endpoint
 
 ```shell
-docker exec -it ze curl http://localhost:8080/redeploy
+docker exec -it ze curl http://localhost:8080/sleep
 ```
 
 ##### Redeploy Endpoint
@@ -59,6 +59,9 @@ docker exec -it ze curl http://localhost:8080/redeploy
 
 After calling the `/redeploy` endpoint, you will see that the `node deploy` child process becomes a zombie process. Since
 naught is not a real process manger, it does not cleanup zombie processes from it's childen.
+
+Another quick test is to call `/sleep`, then `/redeploy`. This will cause the sleep command to be zombied as well, since
+the parent goes away.
 
 If you run the container using the `--init` flag for `docker run` you will see that `docker-init` becomes PID 1,
 and all zombies will be killed.

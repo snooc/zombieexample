@@ -21,6 +21,22 @@ function redeploy(res) {
     console.log(`[${lw}] Finshed processing deploy request`);
 }
 
+function sleep(res) {
+    childProcess.execFile("sleep", ["20"], { cwd: process.cwd() }, (err, stdout, stderr) => {
+        if (err) {
+            console.log(`[${lw}][error]`, err);
+        }
+        console.log(`[${lw}] Executing sleep 20 command`);
+        console.log(`[${lw}][stderr]`, stderr);
+        console.log(`[${lw}][stderr]`, stdout);
+    });
+
+    res.writeHead(200, {"Content-Type": "text/plain"});
+    res.end();
+
+    console.log(`[${lw}] Finshed processing sleep request`);
+}
+
 function status(res) {
     res.writeHead(200, {"Content-Type": "text/plain"});
     res.write(`Worker ${lw} checking in`)
@@ -39,6 +55,8 @@ process.on('message', (msg) => {
 http.createServer((req, res) => {
     if (req.url === "/redeploy") {
         redeploy(res);
+    } else if (req.url === "/sleep") {
+        sleep(res);
     } else {
         status(res);
     }

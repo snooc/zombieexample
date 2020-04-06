@@ -1,0 +1,6 @@
+{
+  "name": "zombieexample",
+  "dependencies": {
+    "naught": "github:barryhammen/naught#node12_support"
+  }
+}
